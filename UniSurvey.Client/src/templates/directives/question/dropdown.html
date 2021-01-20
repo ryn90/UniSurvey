@@ -1,0 +1,17 @@
+﻿<div class="form-group">
+	<label class="control-label col-sm-4" for="dropdown-{{question.id}}">
+		{{question.title}}
+		<span class="required" ng-show="question.isRequired && !question.value">*</span>
+	</label>
+	<div class="col-sm-8">
+		<select class="form-control" 
+				id="dropdown-{{question.id}}"
+		        ng-model="question.value"
+		        ng-required="question.isRequired">
+			<option ng-repeat="option in question.options"
+					value="{{option.value}}">
+				{{option.title}}
+			</option>
+		</select>    
+	</div>
+</div>

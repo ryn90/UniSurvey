@@ -1,0 +1,30 @@
+﻿/* ngClok fix */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+	cursor: pointer;
+}
+
+.message-type {
+	text-transform: capitalize;
+	font-weight: bold;
+}
+
+@media (min-width: 768px) {
+	.table-item {
+		padding-top: 7px;
+	}
+}
+
+.options {
+	padding-bottom: 6px;
+}
+
+.required {
+	color: #F00;
+	font-weight: bold;
+}

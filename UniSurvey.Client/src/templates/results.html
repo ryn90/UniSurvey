@@ -1,0 +1,36 @@
+﻿<ol class="breadcrumb">
+	<li><a ui-sref="home">Home</a></li>
+	<li class="active">Survey Results</li>
+</ol>
+
+<div class="page-header">
+	<h1>Survey Results</h1>
+</div>
+
+<p ng-show="results.closedSurveys.length <= 0">No survey results are available.</p>
+<table class="table" ng-show="results.closedSurveys.length > 0">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Title</th>
+			<th>Creator</th>
+			<th>Status</th>
+			<th>View Results</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="currentSurvey in results.closedSurveys">
+			<td>{{currentSurvey.id}}</td>
+			<td>{{currentSurvey.title}}</td>
+			<td>{{currentSurvey.creator}}</td>
+			<td>{{currentSurvey.isActive | surveyStatusCodeToText}}</td>
+			<td>
+				<button ui-sref="view-results-details({id: currentSurvey.id})"
+				        type="button" 
+						class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> View Results
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>

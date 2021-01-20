@@ -1,0 +1,34 @@
+﻿<ol class="breadcrumb">
+	<li><a ui-sref="home">Home</a></li>
+	<li><a ui-sref="view-results">Survey Results</a></li>
+	<li class="active">Results Details</li>
+</ol>
+
+<div class="page-header">
+	<h1>{{resultsDetails.survey.title}} <small>{{resultsDetails.currentSurveyId}}</small></h1>
+</div>
+
+<p ng-show="resultsDetails.isLoading">Loading, Please Wait...</p>
+<div ng-repeat="questionResult in resultsDetails.results.questions">
+	<h2>{{questionResult.title}}</h2>
+	<div ng-if="questionResult.questionType === 'textfield' || questionResult.questionType === 'textarea'">
+		<ul>
+			<li ng-repeat="value in questionResult.values">{{value}}</li>
+			<li ng-show="questionResult.values <= 0 && questionResult.optionValues <= 0">
+				No responses for this question have been received yet.
+			</li>
+		</ul>
+	</div>
+	<div ng-if="questionResult.questionType === 'dropdown' || questionResult.questionType === 'radio'" 
+		id="pie-chart">
+		<canvas id="pie" class="chart chart-pie chart-xs"
+		        chart-data="questionResult.optionSelectionCounts"
+		        chart-labels="questionResult.optionTitles"
+		        chart-legend="resultsDetails.legend">
+		</canvas>
+	</div>
+</div>
+
+<div class="alert alert-{{resultsDetails.messageType}}" ng-show="resultsDetails.message">
+	<span class="message-type">{{resultsDetails.messageType}}: </span>{{resultsDetails.message}}
+</div>

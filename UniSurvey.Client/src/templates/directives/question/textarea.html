@@ -1,0 +1,15 @@
+﻿<div class="form-group">
+	<label class="control-label col-sm-4" for="textarea-{{question.id}}">
+		{{question.title}}
+		<span class="required" ng-show="question.isRequired && !question.value">*</span>
+	</label>
+	<div class="col-sm-8">
+		<textarea type="text"
+		          class="form-control"
+		          id="textarea-{{question.id}}"
+		          ng-model="question.value"
+		          ng-required="question.isRequired"
+		          maxlength="512">
+		</textarea>
+	</div>
+</div>

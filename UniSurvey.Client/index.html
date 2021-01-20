@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+	<title>Uni Survey</title>
+	<meta charset="utf-8" />
+
+	<!-- SEO Meta Content -->
+	<meta name="description"
+		  content="Uni Survey is a survey application, targeted for Universities" />
+	<meta name="keywords" content="survey, questionnaire, university" />
+	<meta name="robots" content="index, follow" />
+	<meta name="copyright"
+		  content="Copyright - Ryan Sammut | University of Leicester MSc in Advanced Software Engineering Individual Project" />
+
+	<!-- Style Sheets -->
+	<link href="dist/css/vendors.min.css" rel="stylesheet"/>
+	<link href="dist/css/style.min.css" rel="stylesheet" />
+
+	<!-- Favicon Styling for all Devices and Browsers -->
+	<!-- Used http://realfavicongenerator.net/ to generate all the possible combinations of
+		Favicons from my original Favicon -->
+	<link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/favicon/android-chrome-192x192.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/favicon/manifest.json">
+	<link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#f1592a">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body ng-app="uniSurvey" ng-controller="MainCtrl as vm" ng-cloak>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<div class="pull-left">
+					<a ui-sref="home">
+						<img class="logo" src="images/uni-survey.png" alt="Uni Survey Logo" />
+					</a>
+				</div>
+			</div>
+			<ul class="nav navbar-nav" ng-show="vm.isUserLoggedIn()">
+				<li ng-class="vm.activeLink('home')">
+					<a ui-sref="home">Home</a>
+				</li>
+				<!-- Admin Pages -->
+				<li ng-class="vm.activeLink('create-survey')" ng-show="vm.userData.accessLevel == 2">
+					<a ui-sref="create-survey">Create Survey</a>
+				</li>
+				<li ng-class="vm.activeLink('view-results')" ng-show="vm.userData.accessLevel == 2">
+					<a ui-sref="view-results">Survey Results</a>
+				</li>
+				<!-- User Pages -->
+				<li ng-class="vm.activeLink('complete-survey')" ng-show="vm.userData.accessLevel == 1">
+					<a ui-sref="complete-survey">Complete Survey</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-hide="vm.isUserLoggedIn()">
+					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#loginPanel">
+						<span class="glyphicon glyphicon-log-in"></span> Login
+					</a>
+				</li>
+				<li ng-hide="vm.isUserLoggedIn()">
+					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#loginPanel">
+						<span class="glyphicon glyphicon-user"></span> Registration
+					</a>
+				</li>
+				<li ng-hide="vm.isUserLoggedIn()">
+					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#confirmationPanel">
+						<span class="glyphicon glyphicon-check"></span> Account Confirmation
+					</a>
+				</li>
+				<li ng-show="vm.isUserLoggedIn()">
+					<a><span class="glyphicon glyphicon-user"></span> Hi {{vm.userData.userName}}!</a>
+				</li>
+				<li ng-show="vm.isUserLoggedIn()">
+					<a href="#" ng-click="vm.logout()"><span class="glyphicon glyphicon-off"></span> Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" ng-show="!vm.isUserLoggedIn()">
+			<!-- Login and Registration -->
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingOne">
+					<h4 class="panel-title">
+						<a role="button"
+						   data-toggle="collapse"
+						   data-parent="#accordion"
+						   href="#loginPanel"
+						   aria-expanded="true"
+						   aria-controls="loginPanel">
+							Login and Registration
+						</a>
+					</h4>
+				</div>
+				<div id="loginPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+					<div class="panel-body">
+						<form class="form-horizontal" role="form">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="email">Email:</label>
+								<div class="col-sm-10">
+									<input type="email"
+									       class="form-control"
+									       id="email"
+									       ng-model="vm.userData.email"
+									       placeholder="Enter email"
+									       maxlength="256"
+									       required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="pwd">Password:</label>
+								<div class="col-sm-10">
+									<input type="password"
+									       class="form-control"
+									       id="pwd"
+									       ng-model="vm.userData.password"
+									       placeholder="Enter password"
+									       maxlength="256"
+									       required>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-default" ng-click="vm.login()">Login</button>
+									<button type="submit" class="btn btn-default" ng-click="vm.registerUser()">Register</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<div class="alert alert-{{vm.messageType}}" ng-show="vm.message">
+										<span class="message-type">{{vm.messageType}}: </span>{{vm.message}}
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-offset-2 col-sm-10">
+								<p>
+									<span>Admin: </span> ryan@admin.com / TestTest1!
+								</p>
+								<p>
+									<span>User: </span> ryan@user.com / TestTest1!
+								</p>
+							</div>
+						</form>
+
+						<div ng-show="vm.isUserLoggedIn()">
+							<div class="alert alert-{{vm.messageType}}" ng-show="vm.message">
+								<span class="message-type">{{vm.messageType}}: </span>{{vm.message}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Account Confirmation -->
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingTwo">
+					<h4 class="panel-title">
+						<a class="collapsed"
+						   role="button"
+						   data-toggle="collapse"
+						   data-parent="#accordion" 
+						   href="#confirmationPanel"
+						   aria-expanded="false" 
+						   aria-controls="confirmationPanel">
+							Email Confirmation
+						</a>
+					</h4>
+				</div>
+				<div id="confirmationPanel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+						<form class="form-horizontal" role="form">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="emailConfirmation">Email:</label>
+								<div class="col-sm-10">
+									<input type="email"
+									       class="form-control" 
+										   id="emailConfirmation" 
+										   ng-model="vm.userConfirmation.confirmationEmail"
+									       placeholder="Enter email you would like to confirm"
+										   maxlength="256" 
+									       required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="confirmationCode">Confirmation Code:</label>
+								<div class="col-sm-10">
+									<input type="text"
+									       class="form-control"
+									       id="confirmationCode" 
+										   ng-model="vm.userConfirmation.confirmationCode"
+									       placeholder="Confirmation Code"
+									       maxlength="36" 
+										   required>
+									<p class="help-block">Please insert your 36 character code which was sent to the email you registered with. </p>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit"
+									        class="btn btn-default" 
+											ng-click="vm.confirmRegistration()">Confirm Registration</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<div class="alert alert-{{vm.confirmationMessageType}}" ng-show="vm.confirmationMessage">
+										<span class="message-type">{{vm.confirmationMessageType}}: </span>{{vm.confirmationMessage}}
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ui-view></div>
+	</div>
+
+	<!-- Scripts -->
+	<script src="dist/js/vendors.min.js"></script>
+	<script src="dist/js/dist.min.js"></script>
+</body>
+</html>

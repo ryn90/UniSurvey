@@ -1,0 +1,125 @@
+Register
+
+Attempt to register a new user which does not exist within the membership database as well as the UserRole table. 
+
+Expect that the user is registered, visible within both tables, and given a role of 1 by default. 
+
+----
+
+Login 
+
+Attempt to login with a user which does not have an account. 
+
+Expect an error message saying that the credentials do not match
+
+----
+
+Login 2
+
+Attempt to login with valid credentials
+
+Expect to login and the user is assigned the relevant access level. 
+
+----
+
+Create Survey
+
+Attempt to load the page. 
+
+Expect the table to be hidden if no surveys have been created and for a user friendly message to be shown. Otherwise, if surveys exist, the table should be shown. 
+
+----
+
+Create Survey 2
+
+Attempt to create a title which is very long, more than the datbase can handle. 
+
+I expect to be given a user friendly error message or be stopped from creating such a title. 
+
+----
+
+Create Survey 3 
+
+Attempt to create a survey with an acceptable survey title. 
+
+I expect that the survey is created and the table of surveys is shown with the available actions. 
+
+----
+
+Create Survey 4
+
+Attempt to click any of the available actions within the surveys table. 
+
+I expect that the cursor icon turns into a pointer for each action, and the each and every action works as expected. 
+
+---- 
+
+Send to Students
+
+Attempt to send a survey to a student which has no questions or options yet. 
+
+I expect that an error message is shown saying that questions need to be added first. 
+
+----
+
+Sent to Students 2
+
+Attempt to send a survey to invalid emails
+
+I expect that an error message is shown
+
+----
+
+Send to Students 3
+
+Attempt to sent a questionnaire to the same student twice
+
+I expect that the user will still have only a one-time access to the survey. 
+
+---- 
+
+Send to Students 4 
+
+Attempt to insert one invalid and once valid email address
+
+The system should prompt an error message. 
+
+----
+
+Send to Students 5
+
+Attempt to send the questionnaire to a list of the same student
+
+I except to be given an error message or only insert it once
+
+----
+
+Add Questions
+
+Attempt to add a very large question title or option title. 
+
+The client should not allow you to add a title which exceeds the database nvarchar length
+
+---
+
+Add Questions 2
+
+Attempt to edit or insert an empty question title. 
+
+The client should not allow you to do so. 
+
+----
+
+Complete Surveys
+
+Attempt to view the survey list with a user who does not have access to surveys. 
+
+I expect to see a message saying the user does not have access to any surveys at the moment
+
+----
+
+Complete Surveys 2
+
+Attempt to view questionnaires which I have access to, when the user really has access.
+
+I expect to see a list of surveys I have access to. 

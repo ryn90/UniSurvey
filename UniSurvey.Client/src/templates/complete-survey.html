@@ -1,0 +1,31 @@
+﻿<ol class="breadcrumb">
+	<li><a ui-sref="home">Home</a></li>
+	<li class="active">Complete Survey</li>
+</ol>
+
+<div class="page-header">
+	<h1>Available Surveys</h1>
+</div>
+
+<p ng-show="completeSurvey.availableSurveys.length <= 0">You do not have any outstanding surveys to complete, please try again later.</p>
+<table class="table" ng-show="completeSurvey.availableSurveys.length > 0">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Title</th>
+			<th>Commands</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="currentSurvey in completeSurvey.availableSurveys">
+			<td>{{currentSurvey.id}}</td>
+			<td>{{currentSurvey.title}}</td>
+			<td>
+				<button ui-sref="complete-survey-details({id: currentSurvey.id})"
+				        type="button" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-share" aria-hidden="true"></span> Go To Survey
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>

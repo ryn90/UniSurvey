@@ -1,0 +1,36 @@
+﻿<ol class="breadcrumb">
+	<li><a ui-sref="home">Home</a></li>
+	<li><a ui-sref="complete-survey">Complete Survey</a></li>
+	<li class="active">Complete Survey Details</li>
+</ol>
+
+<div class="page-header">
+	<h1>{{completeSurveyDetails.currentSurvey.title}}</h1>
+</div>
+
+<form name="completeSurvey" class="form-horizontal" role="form" >
+	<fieldset ng-disabled="completeSurveyDetails.surveySubmitted">
+		<div ng-repeat="question in completeSurveyDetails.surveySubmissionDetails.questions">
+			<question-directive question="question"></question-directive>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-4 col-sm-8">
+				<button type="submit"
+				    class="btn btn-default"
+				    ng-disabled="!completeSurvey.$valid" 
+					ng-click="completeSurveyDetails.submitSurvey()">
+					Send
+				</button>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-4 col-sm-8">
+				<div class="alert alert-{{completeSurveyDetails.messageType}}" 
+					 ng-show="completeSurveyDetails.message">
+					<span class="message-type">{{completeSurveyDetails.messageType}}: </span>
+					{{completeSurveyDetails.message}}
+				</div>
+			</div>
+		</div>
+	</fieldset>
+</form>
